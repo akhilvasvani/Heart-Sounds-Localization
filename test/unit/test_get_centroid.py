@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from scripts.sound_source_localization import SoundSourceLocation
+from src.sound_source_localization import SoundSourceLocation
 
 
 class GetCentroidTestCase(unittest.TestCase):
@@ -26,7 +26,7 @@ class GetCentroidTestCase(unittest.TestCase):
 
     def test_mic_lists_not_same_length(self):
         test_list = [[5.0, 7.0], [7.9, -0.56], [7.0, -4.5, 6.0]]
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             self.function(test_list)
 
     def test_mic_list_not_all_float_types(self):

@@ -9,7 +9,7 @@ from src.sound_source_localization import SoundSourceLocation
 
 class SoundSourceLocationTestCase(unittest.TestCase):
     def setUp(self):
-        sample_filepath, sample_method = '/home/akhil/Sound-Source-Localization/data/heart sound/raw/', 'SRP'
+        sample_filepath, sample_method = '/home/akhil/Heart-Sounds-Localization/data/heart sound/raw/', 'SRP'
         self.src = SoundSourceLocation(sample_filepath, sample_method)
 
         self.test_get_centroid = self.src.get_centroid
