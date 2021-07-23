@@ -2,6 +2,7 @@
 """This script will find the most likely location of the sound source."""
 
 import csv
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -25,6 +26,7 @@ class DetermineSourceLocation(SoundSourceLocation):
            room_dim: (list) room dimensions
            center_of_room: (numpy array) center of room
            filename: (string) file name to save output file and picture as
+           folder: (str) folder where to save the output file and picture
     """
 
     def __init__(self, algo_name, source_name, all_source_estimates, *args,
@@ -39,7 +41,6 @@ class DetermineSourceLocation(SoundSourceLocation):
         self.s1_bool = kwargs.get('s1_bool') or None
 
         self.room_dim = set_room_dimensions()
-
         self.center_of_room = self.room_dim/2
 
         self.filename = "_".join(['mic', str(self.mic_combinations_number),
@@ -48,6 +49,8 @@ class DetermineSourceLocation(SoundSourceLocation):
                                       str(self.sound_speed)]),
                                   str(self.algo_name),
                              'CLUSTER_multiprocessor', str(self.num_sources)])
+
+        self.folder = "/".join([os.path.split(os.getcwd())[0], "output/"])
 
     def room_filter_out(self):
         """Filters out potential source locations outside of
@@ -239,7 +242,7 @@ class DetermineSourceLocation(SoundSourceLocation):
 
             # Save the file
             if save_plot:
-                fig.savefig(".".join([self.filename, 'png']))
+                fig.savefig(self.folder+".".join([self.filename, 'png']))
                 plt.close(fig)
 
             if write_to_file:
@@ -256,7 +259,8 @@ class DetermineSourceLocation(SoundSourceLocation):
            Args:
                source: (numpy array) potential source locations
         """
-        with open(".".join([self.filename, 'csv']), mode='w') as sound_source_file:
+        with open(self.folder+".".join([self.filename, 'csv']),
+                  mode='w') as sound_source_file:
             writer = csv.writer(sound_source_file, delimiter=',')
 
             # First Row of Data, names of the columns

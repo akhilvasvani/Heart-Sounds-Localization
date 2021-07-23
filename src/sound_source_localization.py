@@ -54,29 +54,29 @@ class SoundSourceLocation:
     """
 
     def __init__(self, algo_name, num_sources=1, number_of_mic_splits=5,
-                 sampling_rate=16000, s1_bool=True, x_dim_max=0.34925,
-                 y_dim_max=0.219964, z_dim_max=0.2413, transform=False):
+                 sound_speed=30, mic_combinations_number=3,
+                 sampling_rate=16000, fft_size=256, freq_range=None,
+                 s1_bool=True, transform=False):
         """Initializes SoundSourceLocation with algo_name, num_sources."""
 
         self.algo_name = algo_name
         self.num_sources = num_sources
         self.number_of_mic_splits = number_of_mic_splits
-
-        # Constants
-        self.sound_speed = 30
-        self.mic_combinations_number = 3
+        self.sound_speed = sound_speed
+        self.mic_combinations_number = mic_combinations_number
 
         self.sampling_rate = sampling_rate
-        self.fft_size = 256
-        self.freq_range = [0, 250]
+        self.fft_size = fft_size
+
+        if freq_range is None:
+            self.freq_range = [0, 250]
+
         self.tol = 1e-3  # 3e-3
         self.radius = np.arange(0, 0.5, self.tol)[:, np.newaxis]
 
         self.s1_bool = s1_bool
 
-        self.x_dim_max = x_dim_max
-        self.y_dim_max = y_dim_max
-        self.z_dim_max = z_dim_max
+        self.x_dim_max, self.y_dim_max, self.z_dim_max = iter(set_room_dimensions())
 
         # TODO: DEBUG
         self.transform = transform
@@ -94,7 +94,6 @@ class SoundSourceLocation:
         """
         microphone_array = np.array(*args)
         return np.sum(microphone_array, axis=0) / len(*args)
-
 
     @staticmethod
     @validate_get_mic_with_sound_data
@@ -196,7 +195,8 @@ class SoundSourceLocation:
         # Multiply each respective part by the radius and recenter it
         # with the centroid
         for i in range(self.num_sources):
-            array_split[i] = self.radius * array_split[i] + np.array(the_centroid)[np.newaxis, :]
+            array_split[i] = self.radius * array_split[i] \
+                             + np.array(the_centroid)[np.newaxis, :]
 
         return np.vstack(array_split)
 
