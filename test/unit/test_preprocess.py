@@ -1,18 +1,18 @@
 import unittest
 import numpy as np
 
-from scripts.preprocess import PrepareData
+from src.preprocess import PrepareData
 
 
 class PrepareDataTestCase(unittest.TestCase):
     def setUp(self):
-        head = '/home/akhil/Sound-Source-Localization/data/'
+        head = '/home/akhil/Heart-Sounds-Localization/data/'
         sample_filepath_default = "".join([head, 'raw/'])
         sample_filename_non_default = "".join([head,
                                                'CMU_ARCTIC/cmu_us_bdl_arctic/wav/',
                                                'arctic_a0001.wav'])
 
-        self.src_default = PrepareData(sample_filepath_default, default=True)
+        self.src_default = PrepareData(sample_filepath_default)
         self.src_non_default = PrepareData(sample_filename_non_default)
 
 

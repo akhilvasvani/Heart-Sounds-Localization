@@ -6,8 +6,8 @@ import sys
 import pathlib
 import scipy.io as sio
 
-from scripts.validations import validate_file_path, validate_signal_data
-from scripts.utils import set_microphone_locations
+from tools.validations import validate_file_path, validate_signal_data
+from tools.utilities import set_microphone_locations
 
 
 class PrepareData:

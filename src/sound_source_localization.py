@@ -7,8 +7,8 @@ from itertools import combinations
 import numpy as np
 import pyroomacoustics as pra
 
-from scripts.utils import MultiProcessingWithReturnValue
-from scripts.validations import validate_difference_of_arrivals, \
+from tools.utilities import MultiProcessingWithReturnValue, set_room_dimensions
+from tools.validations import validate_difference_of_arrivals, \
     ValidateCentroid, validate_get_mic_with_sound_data, validate_splits,\
     validate_instance_type
 
@@ -81,7 +81,6 @@ class SoundSourceLocation:
         # TODO: DEBUG
         self.transform = transform
 
-
     @staticmethod
     @ValidateCentroid
     def get_centroid(*args):
@@ -96,14 +95,6 @@ class SoundSourceLocation:
         microphone_array = np.array(*args)
         return np.sum(microphone_array, axis=0) / len(*args)
 
-    def set_room_dimensions(self):
-        """Returns the numpy array of the room dimensions with the format:
-           Width, Depth, and Length.
-           Note: all the dimensions are measured in meters.
-           Default: Dimensions of Room (cm): [35, 22, 24]
-           room_dim = np.array([0.34925, 0.219964, 0.2413])
-        """
-        return np.array([self.x_dim_max, self.y_dim_max, self.z_dim_max])
 
     @staticmethod
     @validate_get_mic_with_sound_data
@@ -284,7 +275,7 @@ class SoundSourceLocation:
 
         # Re-center the points, add the x,y,z location of the center of the
         # room to the obtained point
-        center_of_room = self.set_room_dimensions() / 2
+        center_of_room = set_room_dimensions() / 2
 
         # Reconvert all the potential source points
         # Format: (Width, Depth, Length)

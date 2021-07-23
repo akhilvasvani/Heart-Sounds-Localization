@@ -3,6 +3,7 @@
 for the sound source localization script."""
 
 import multiprocessing
+import numpy as np
 
 
 class MultiProcessingWithReturnValue:
@@ -50,3 +51,13 @@ def set_microphone_locations():
 
     return [[x, y, z] for x in x_locations for y in y_locations
             for z in z_locations]
+
+
+def set_room_dimensions():
+    """Returns the numpy array of the room dimensions with the format:
+       Width, Depth, and Length.
+       Note: all the dimensions are measured in meters.
+       Default: Dimensions of Room (cm): [35, 22, 24]
+       room_dim = np.array([0.34925, 0.219964, 0.2413])
+    """
+    return np.array([0.35, 0.22, 0.25])

@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from scripts.sound_source_localization import SoundSourceLocation
+from src.sound_source_localization import SoundSourceLocation
 
 # TODO:
 #   1) Test one Real case in DifferenceOfArrivalsTestCase
@@ -43,7 +43,7 @@ class InitTestCase(SoundSourceLocationTestCase):
         self.assertEqual(self.src.mic_combinations_number, 3)
 
     def test_sampling_frequency(self):
-        self.assertEqual(self.src.fs, 16000)
+        self.assertEqual(self.src.sampling_rate, 16000)
 
     def test_fast_fourier_transform_size(self):
         self.assertEqual(self.src.fft_size, 256)

@@ -1,9 +1,9 @@
 # !/usr/bin/env python
 """This is the main driver file."""
 
-from scripts.preprocess import PrepareData
-from scripts.sound_source_localization import SoundSourceLocation
-from scripts.determine_source import DetermineSourceLocation
+from src.preprocess import PrepareData
+from src.sound_source_localization import SoundSourceLocation
+from src.determine_source import DetermineSourceLocation
 
 
 def main():

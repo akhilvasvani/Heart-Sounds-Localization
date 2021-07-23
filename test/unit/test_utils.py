@@ -1,16 +1,17 @@
 import unittest
 import numpy as np
 
-from scripts.validations import convert_to_one_list, \
+from tools.validations import convert_to_one_list, \
     check_list_of_lists_are_same_length
 
-from scripts.utils import MultiProcessingWithReturnValue
+from tools.utils import MultiProcessingWithReturnValue
 
 
 def target_function(sample_name, *args):
     """Test Function. Outside the class because multiprocessing class
        cannot inherit nested functions."""
     return sample_name, np.add(*args)
+
 
 class MultiProcessingWithReturnValueTestCase(unittest.TestCase):
     """

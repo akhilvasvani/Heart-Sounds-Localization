@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 from scipy import spatial
 from mpl_toolkits.mplot3d import Axes3D
 
-from scripts.sound_source_localization import SoundSourceLocation
-from scripts.utils import set_microphone_locations
+from src.sound_source_localization import SoundSourceLocation
+from tools.utilities import set_microphone_locations, set_room_dimensions
 
 
 class DetermineSourceLocation(SoundSourceLocation):
@@ -38,9 +38,9 @@ class DetermineSourceLocation(SoundSourceLocation):
         self._microphone_locations = args
         self.s1_bool = kwargs.get('s1_bool') or None
 
-        self.room_dim = [0.35, 0.22, 0.25]
+        self.room_dim = set_room_dimensions()
 
-        self.center_of_room = np.array(self.room_dim)/2
+        self.center_of_room = self.room_dim/2
 
         self.filename = "_".join(['mic', str(self.mic_combinations_number),
                                   str(self.source_name),
